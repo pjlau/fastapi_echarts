@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive ECharts App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #chart { width: 600px; height: 400px; }
+    </style>
+</head>
+<body>
+    <h1>Sales by Category</h1>
+    <div id="chart"></div>
+
+    <script src="/static/echarts.min.js"></script>
+    <script>
+        const chart = echarts.init(document.getElementById('chart'));
+
+        fetch('/api/data?categories=all')
+            .then(response => response.json())
+            .then(data => {
+                // Store original colors for restoration
+                const originalColors = data.values.map(() => '#5470c6');
+
+                const option = {
+                    title: { text: 'Sales Data' },
+                    tooltip: { trigger: 'item' },
+                    xAxis: { data: data.categories },
+                    yAxis: {},
+                    series: [{
+                        name: 'Sales',
+                        type: 'bar',
+                        data: data.values,
+                        itemStyle: {
+                            color: '#5470c6' // Default bar color
+                        }
+                    }],
+                    animation: false
+                };
+                chart.setOption(option);
+
+                // Handle hover to gray out other bars
+                chart.on('mouseover', function (params) {
+                    if (params.componentType === 'series' && params.seriesType === 'bar') {
+                        console.log('Hovering over:', params.name);
+                        const newColors = data.values.map((_, index) =>
+                            index === params.dataIndex ? '#5470c6' : '#d3d3d3' // Gray out non-hovered bars
+                        );
+                        chart.setOption({
+                            series: [{
+                                itemStyle: {
+                                    color: params => newColors[params.dataIndex]
+                                }
+                            }]
+                        });
+                    }
+                });
+
+                // Restore all bars on mouseout
+                chart.on('mouseout', function (params) {
+                    if (params.componentType === 'series' && params.seriesType === 'bar') {
+                        console.log('Mouse out');
+                        chart.setOption({
+                            series: [{
+                                itemStyle: {
+                                    color: '#5470c6' // Restore original color
+                                }
+                            }]
+                        });
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
