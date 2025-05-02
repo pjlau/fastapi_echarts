@@ -1,6 +1,6 @@
 # Simple FastAPI + ECharts Web App
 
-A simple web application using **FastAPI** for the backend API, **SQLite** for data storage, and **Apache ECharts** for interactive data visualization. The app displays a bar chart of sales data, with a dropdown to filter categories.
+A simple web application using **FastAPI** for the backend API, **SQLite** for data storage, and **Apache ECharts** for interactive data visualization. The app displays a bar chart of sales data, where hovering over a bar highlights it and grays out other categories.
 
 ## Setup
 
