@@ -6,5 +6,5 @@ A simple web application using **FastAPI** for the backend API, **SQLite** for d
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/simple-web-app.git
-   cd simple-web-app
+   git clone https://github.com/your-username/fastapi_echarts.git
+   cd fastapi_echarts
