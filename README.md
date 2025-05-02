@@ -12,3 +12,8 @@ A simple web application using **FastAPI** for the backend API, **SQLite** for d
 2. Run the Web App:
    ```bash
    uvicorn app.main:app --reload
+
+## Results
+<img src="images/demo_fig1.png" alt="Example1" width="400">
+<br>
+<img src="images/demo_fig2.png" alt="Example5" width="400">
